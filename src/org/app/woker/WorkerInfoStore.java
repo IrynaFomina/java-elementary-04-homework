@@ -2,28 +2,39 @@ package org.app.woker;
 
 import java.util.Arrays;
 
-public class WorkerInfoStore {
-    private Manager[] managers = new Manager[0];
-    private Programmer[] programmers = new Programmer[0];
-    private QAEngineer[] qaEngineers = new QAEngineer[0];
+ class WorkerInfoStore {
+    private final static WorkerInfoStore workInfoStore = new WorkerInfoStore();
+    private Worker[] managers = new Manager[0];
+    private Worker[] programmers = new Programmer[0];
+    private Worker[] qaEngineers = new QAEngineer[0];
 
+    private WorkerInfoStore() {
+    }
+
+    static WorkerInfoStore of() {
+        return workInfoStore;
+    }
 
     //добавить в массив managers
     private void add(Manager worker) {
-        managers = Arrays.copyOf(managers, managers.length + 1);
-        managers[managers.length - 1] = worker;
+        managers = addNewWorker(managers, worker);
     }
 
     //добавить в массив programmers
     private void add(Programmer worker) {
-        programmers = Arrays.copyOf(programmers, programmers.length + 1);
-        programmers[programmers.length - 1] = worker;
+        programmers = addNewWorker(programmers, worker);
     }
 
     //добавить в массив qaEngineers
     private void add(QAEngineer worker) {
-        qaEngineers = Arrays.copyOf(qaEngineers, qaEngineers.length + 1);
-        qaEngineers[qaEngineers.length - 1] = worker;
+        qaEngineers = addNewWorker(qaEngineers, worker);
+    }
+
+
+    private Worker[] addNewWorker(Worker[] workerArray, Worker worker) {
+        workerArray = Arrays.copyOf(workerArray, workerArray.length + 1);
+        workerArray[workerArray.length - 1] = worker;
+        return workerArray;
     }
 
     /**
@@ -32,7 +43,7 @@ public class WorkerInfoStore {
      * Если тип - Programmer - добавить в массив managers
      * Если тип - QAEngeneer - добавить в массив qaEngeneers
      **/
-    void add(Worker worker) {
+     void add(Worker worker) {
         if (worker instanceof Manager) {
             add((Manager) worker);
         } else if (worker instanceof Programmer) {
