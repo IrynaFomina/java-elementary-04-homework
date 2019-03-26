@@ -2,11 +2,12 @@ package org.app.woker;
 
 import java.util.Arrays;
 
- class WorkerInfoStore {
+class WorkerInfoStore {
     private final static WorkerInfoStore workInfoStore = new WorkerInfoStore();
-    private Worker[] managers = new Manager[0];
-    private Worker[] programmers = new Programmer[0];
-    private Worker[] qaEngineers = new QAEngineer[0];
+    int initSize = 0;
+    private Worker[] managers = new Manager[initSize];
+    private Worker[] programmers = new Programmer[initSize];
+    private Worker[] qaEngineers = new QAEngineer[initSize];
 
     private WorkerInfoStore() {
     }
@@ -43,7 +44,7 @@ import java.util.Arrays;
      * Если тип - Programmer - добавить в массив managers
      * Если тип - QAEngeneer - добавить в массив qaEngeneers
      **/
-     void add(Worker worker) {
+    void add(Worker worker) {
         if (worker instanceof Manager) {
             add((Manager) worker);
         } else if (worker instanceof Programmer) {
